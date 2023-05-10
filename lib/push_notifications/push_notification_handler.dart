@@ -15,27 +15,37 @@ void handleRemoteMessage(RemoteMessage message) {
 }
 ///  Function [handleNotificationPressed]  call when you pressed on notification
 
+/// [data] must be not Empty
 void handleNotificationPressed(Map<String, dynamic> data) {
-
-  String type = data["type"];
-  String content = data["content"];
-  final NotificationType notificationType;
-  notificationType =   NotificationResult(type, content);
-  switch (type) {
-    case 'Alert':
+  if (data.isNotEmpty) {
+    String type = data["type"];
+    String content = data["content"];
+    final NotificationType notificationType;
+    notificationType =   NotificationResult(type, content);
+    switch (type) {
+      case 'Alert':
       /// this to push to any page you want
-      OnClickNotificationEvent.pushUpdate(notificationType);
-      break;
+        OnClickNotificationEvent.pushUpdate(notificationType);
+        print('notificationType is <<<<#>>>>$notificationType');
 
-    default:
-      return;
+        break;
+
+      default:
+        return;
+    }
+  }else{
+    /// this push to test , is [push] to page working or not ,
+    /// but you must check if notification [data] is empty you must not push to  any page
+    OnClickNotificationEvent.pushUpdate(const NotificationResult("test only","test only"));
+
   }
 
 
 }
 
 /// function [handleForegroundMessage] to appear notification
-
+/// if you use notification from firebase only use [message.notification]
+/// if you use notification from firebase and backend use[message.data]
 void handleForegroundMessage(RemoteMessage message) async {
   final notification = message.notification;
   if (notification != null) {

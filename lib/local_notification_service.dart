@@ -33,12 +33,9 @@ class LocalNotificationService {
       iOS: iosInitializationSettings,
     );
     await _localNotificationService.initialize(
-
       settings,
       onDidReceiveNotificationResponse: _onDidReceiveLocalNotification,
     );
-
-
 
     /// function [getNotificationAppLaunchDetails] get notifications and
     /// check if Is the notification opened?
@@ -99,34 +96,15 @@ class LocalNotificationService {
   ///  function [_onDidReceiveLocalNotification] call when you pressed on notification
   /// this function call everytime you pressed on notification
   void _onDidReceiveLocalNotification(NotificationResponse? details) {
-
-
-    if ((details?.payload??'').isNotEmpty) {
+    if ((details?.payload ?? '').isNotEmpty) {
       final Map<String, dynamic>? data = json.decode(details?.payload ?? "");
 
       /// data must be not null t
-      if (data != null ) {
+      if (data != null) {
         handleNotificationPressed(data);
-      }else{
-
-      }
-    }  else{
+      } else {}
+    } else {
       /// if payload is empty you mush not call  _handleNotificationPressed(data)
-
-
-
     }
-
-
-
-
-
-
-
-
   }
-
-
-
-
 }
